@@ -41,3 +41,4 @@ python client/main.py
 - Refer to gRPC go for golang specific server & client codes [gRPC golang basic tutorial](https://grpc.io/docs/languages/go/basics/)
 - Refer to gRPC guides [gRPC guides](https://grpc.io/docs/guides/)
 - [gRPC go examples](https://github.com/grpc/grpc-go/tree/master/examples)
+- [goFiber + gRPC](https://github.com/gofiber/recipes/tree/master/fiber-grpc)
