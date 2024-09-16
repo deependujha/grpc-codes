@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndeep.proto\x12\x04\x64\x65\x65p\"\x1e\n\x06NumReq\x12\t\n\x01\x61\x18\x01 \x01(\x05\x12\t\n\x01\x62\x18\x02 \x01(\x05\"\x14\n\x07NumResp\x12\t\n\x01\x63\x18\x01 \x01(\x05\x32\x33\n\x07\x44\x65\x65pSrv\x12(\n\tAddTwoNum\x12\x0c.deep.NumReq\x1a\r.deep.NumRespB\x10Z\x0e./server/protob\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\ndeep.proto\x12\x04\x64\x65\x65p\"\x1e\n\x06NumReq\x12\t\n\x01\x61\x18\x01 \x01(\x05\x12\t\n\x01\x62\x18\x02 \x01(\x05\"\x10\n\x03Num\x12\t\n\x01\x61\x18\x01 \x01(\x05\"\x14\n\x07NumResp\x12\t\n\x01\x63\x18\x01 \x01(\x05\x32\x61\n\x07\x44\x65\x65pSrv\x12(\n\tAddTwoNum\x12\x0c.deep.NumReq\x1a\r.deep.NumResp\x12,\n\x0e\x41\x64\x64\x41llTheseNum\x12\t.deep.Num\x1a\r.deep.NumResp(\x01\x42\x10Z\x0e./server/protob\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -34,8 +34,10 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['DESCRIPTOR']._serialized_options = b'Z\016./server/proto'
   _globals['_NUMREQ']._serialized_start=20
   _globals['_NUMREQ']._serialized_end=50
-  _globals['_NUMRESP']._serialized_start=52
-  _globals['_NUMRESP']._serialized_end=72
-  _globals['_DEEPSRV']._serialized_start=74
-  _globals['_DEEPSRV']._serialized_end=125
+  _globals['_NUM']._serialized_start=52
+  _globals['_NUM']._serialized_end=68
+  _globals['_NUMRESP']._serialized_start=70
+  _globals['_NUMRESP']._serialized_end=90
+  _globals['_DEEPSRV']._serialized_start=92
+  _globals['_DEEPSRV']._serialized_end=189
 # @@protoc_insertion_point(module_scope)

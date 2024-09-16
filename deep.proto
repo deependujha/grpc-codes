@@ -8,11 +8,16 @@ option go_package = "./server/proto";
 
 service DeepSrv {
     rpc AddTwoNum(NumReq) returns (NumResp);
+    rpc AddAllTheseNum(stream Num) returns (NumResp);
 }
 
 message NumReq {
     int32 a = 1;
     int32 b = 2;
+}
+
+message Num {
+    int32 a = 1;
 }
 
 message NumResp {

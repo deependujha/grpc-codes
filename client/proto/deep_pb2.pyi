@@ -12,6 +12,12 @@ class NumReq(_message.Message):
     b: int
     def __init__(self, a: _Optional[int] = ..., b: _Optional[int] = ...) -> None: ...
 
+class Num(_message.Message):
+    __slots__ = ("a",)
+    A_FIELD_NUMBER: _ClassVar[int]
+    a: int
+    def __init__(self, a: _Optional[int] = ...) -> None: ...
+
 class NumResp(_message.Message):
     __slots__ = ("c",)
     C_FIELD_NUMBER: _ClassVar[int]

@@ -39,6 +39,11 @@ class DeepSrvStub(object):
                 request_serializer=deep__pb2.NumReq.SerializeToString,
                 response_deserializer=deep__pb2.NumResp.FromString,
                 _registered_method=True)
+        self.AddAllTheseNum = channel.stream_unary(
+                '/deep.DeepSrv/AddAllTheseNum',
+                request_serializer=deep__pb2.Num.SerializeToString,
+                response_deserializer=deep__pb2.NumResp.FromString,
+                _registered_method=True)
 
 
 class DeepSrvServicer(object):
@@ -50,12 +55,23 @@ class DeepSrvServicer(object):
         context.set_details('Method not implemented!')
         raise NotImplementedError('Method not implemented!')
 
+    def AddAllTheseNum(self, request_iterator, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
 
 def add_DeepSrvServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'AddTwoNum': grpc.unary_unary_rpc_method_handler(
                     servicer.AddTwoNum,
                     request_deserializer=deep__pb2.NumReq.FromString,
+                    response_serializer=deep__pb2.NumResp.SerializeToString,
+            ),
+            'AddAllTheseNum': grpc.stream_unary_rpc_method_handler(
+                    servicer.AddAllTheseNum,
+                    request_deserializer=deep__pb2.Num.FromString,
                     response_serializer=deep__pb2.NumResp.SerializeToString,
             ),
     }
@@ -85,6 +101,33 @@ class DeepSrv(object):
             target,
             '/deep.DeepSrv/AddTwoNum',
             deep__pb2.NumReq.SerializeToString,
+            deep__pb2.NumResp.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def AddAllTheseNum(request_iterator,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.stream_unary(
+            request_iterator,
+            target,
+            '/deep.DeepSrv/AddAllTheseNum',
+            deep__pb2.Num.SerializeToString,
             deep__pb2.NumResp.FromString,
             options,
             channel_credentials,

@@ -19,7 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	DeepSrv_AddTwoNum_FullMethodName = "/deep.DeepSrv/AddTwoNum"
+	DeepSrv_AddTwoNum_FullMethodName      = "/deep.DeepSrv/AddTwoNum"
+	DeepSrv_AddAllTheseNum_FullMethodName = "/deep.DeepSrv/AddAllTheseNum"
 )
 
 // DeepSrvClient is the client API for DeepSrv service.
@@ -27,6 +28,7 @@ const (
 // For semantics around ctx use and closing/ending streaming RPCs, please refer to https://pkg.go.dev/google.golang.org/grpc/?tab=doc#ClientConn.NewStream.
 type DeepSrvClient interface {
 	AddTwoNum(ctx context.Context, in *NumReq, opts ...grpc.CallOption) (*NumResp, error)
+	AddAllTheseNum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[Num, NumResp], error)
 }
 
 type deepSrvClient struct {
@@ -47,11 +49,25 @@ func (c *deepSrvClient) AddTwoNum(ctx context.Context, in *NumReq, opts ...grpc.
 	return out, nil
 }
 
+func (c *deepSrvClient) AddAllTheseNum(ctx context.Context, opts ...grpc.CallOption) (grpc.ClientStreamingClient[Num, NumResp], error) {
+	cOpts := append([]grpc.CallOption{grpc.StaticMethod()}, opts...)
+	stream, err := c.cc.NewStream(ctx, &DeepSrv_ServiceDesc.Streams[0], DeepSrv_AddAllTheseNum_FullMethodName, cOpts...)
+	if err != nil {
+		return nil, err
+	}
+	x := &grpc.GenericClientStream[Num, NumResp]{ClientStream: stream}
+	return x, nil
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeepSrv_AddAllTheseNumClient = grpc.ClientStreamingClient[Num, NumResp]
+
 // DeepSrvServer is the server API for DeepSrv service.
 // All implementations must embed UnimplementedDeepSrvServer
 // for forward compatibility.
 type DeepSrvServer interface {
 	AddTwoNum(context.Context, *NumReq) (*NumResp, error)
+	AddAllTheseNum(grpc.ClientStreamingServer[Num, NumResp]) error
 	mustEmbedUnimplementedDeepSrvServer()
 }
 
@@ -64,6 +80,9 @@ type UnimplementedDeepSrvServer struct{}
 
 func (UnimplementedDeepSrvServer) AddTwoNum(context.Context, *NumReq) (*NumResp, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method AddTwoNum not implemented")
+}
+func (UnimplementedDeepSrvServer) AddAllTheseNum(grpc.ClientStreamingServer[Num, NumResp]) error {
+	return status.Errorf(codes.Unimplemented, "method AddAllTheseNum not implemented")
 }
 func (UnimplementedDeepSrvServer) mustEmbedUnimplementedDeepSrvServer() {}
 func (UnimplementedDeepSrvServer) testEmbeddedByValue()                 {}
@@ -104,6 +123,13 @@ func _DeepSrv_AddTwoNum_Handler(srv interface{}, ctx context.Context, dec func(i
 	return interceptor(ctx, in, info, handler)
 }
 
+func _DeepSrv_AddAllTheseNum_Handler(srv interface{}, stream grpc.ServerStream) error {
+	return srv.(DeepSrvServer).AddAllTheseNum(&grpc.GenericServerStream[Num, NumResp]{ServerStream: stream})
+}
+
+// This type alias is provided for backwards compatibility with existing code that references the prior non-generic stream type by name.
+type DeepSrv_AddAllTheseNumServer = grpc.ClientStreamingServer[Num, NumResp]
+
 // DeepSrv_ServiceDesc is the grpc.ServiceDesc for DeepSrv service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -116,6 +142,12 @@ var DeepSrv_ServiceDesc = grpc.ServiceDesc{
 			Handler:    _DeepSrv_AddTwoNum_Handler,
 		},
 	},
-	Streams:  []grpc.StreamDesc{},
+	Streams: []grpc.StreamDesc{
+		{
+			StreamName:    "AddAllTheseNum",
+			Handler:       _DeepSrv_AddAllTheseNum_Handler,
+			ClientStreams: true,
+		},
+	},
 	Metadata: "deep.proto",
 }
