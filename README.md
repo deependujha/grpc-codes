@@ -14,3 +14,9 @@ go run server/main.go
 ```bash
 python client/main.py
 ```
+
+---
+
+## gRPC reflection
+
+- Use `postman` to test the gRPC server (load the service definition via `reflection`)
