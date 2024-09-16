@@ -5,6 +5,16 @@
 - A go grpc server
 - A python grpc client
 
+---
+
+## Main components of gRPC
+
+- `proto` files (service definition)
+- `stubs` (client side)
+- `skeletons` (server side)
+
+---
+
 ## gRPC server
 
 ```bash
