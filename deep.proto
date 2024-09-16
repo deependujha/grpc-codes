@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package deep;
+
+option go_package = "./server/proto";
+// option python_package = "./client/proto";
+
+
+service DeepSrv {
+    rpc AddTwoNum(NumReq) returns (NumResp);
+}
+
+message NumReq {
+    int32 a = 1;
+    int32 b = 2;
+}
+
+message NumResp {
+    int32 c = 1;
+}
